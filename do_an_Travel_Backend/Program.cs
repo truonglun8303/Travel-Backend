@@ -1,4 +1,7 @@
+using do_an_Travel_Backend.Data;
+using do_an_Travel_Backend.Models;
 using do_an_Travel_Backend.Service.Travels;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<TravelDbContext>(
+        option =>
+        {
+            option.UseSqlServer(builder.Configuration.GetConnectionString("TravelDatabase"));
+        }
+);
 builder.Services.AddTransient<ITravelsService, TravelsService>();
 var app = builder.Build();
 

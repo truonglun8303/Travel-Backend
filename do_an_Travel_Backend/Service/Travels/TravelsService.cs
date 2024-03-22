@@ -1,9 +1,16 @@
-﻿using do_an_Travel_Backend.Models;
+﻿using do_an_Travel_Backend.Data;
+using do_an_Travel_Backend.Models;
 
 namespace do_an_Travel_Backend.Service.Travels
 {
     public class TravelsService : ITravelsService
     {
+
+        private readonly TravelDbContext _travelDbContext;
+        public TravelsService(TravelDbContext travelDbContext)
+        {
+            _travelDbContext = travelDbContext;
+        }
         public bool AddTravels(Travel travel)
         {
             throw new NotImplementedException();
@@ -11,7 +18,7 @@ namespace do_an_Travel_Backend.Service.Travels
 
         public List<Travel> GetTravels()
         {
-            return new List<Travel>();
+            return _travelDbContext.Travels.OrderByDescending(x => x.Id).ToList();
         }
 
         public bool RemoveTravels(Travel travel)
